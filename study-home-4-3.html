@@ -235,6 +235,9 @@ textarea{width:100%;min-height:96px;border-radius:14px;border:1.5px solid var(--
 .zoom-x{position:fixed;top:calc(var(--safe-t) + 10px);right:14px;width:44px;height:44px;border-radius:50%;border:0;background:#fff;font-size:20px;font-weight:800}
 .zoom-hint{position:fixed;bottom:calc(var(--safe-b) + 10px);left:0;right:0;text-align:center;color:#fff;font-size:13px;opacity:.8}
 .fb.warn{background:#fff5dc;color:#6b5320;margin-top:8px}
+.q-unverified{margin:4px 0 12px;padding:10px 12px;border-radius:14px;background:#fff5dc;border:1px dashed #e8c870;color:#6b5320;font-size:13.5px;font-weight:700}
+.cat-warn{margin:6px 2px 0;font-size:12.5px;color:#7a5c1e}
+.cat-warn-inline{color:#7a5c1e}
 .rv{border-top:1px dashed var(--line);padding:14px 0}
 .rv-meta{font-size:12.5px;color:var(--muted);font-weight:700}
 .rv-q{white-space:pre-wrap;font-weight:750;margin:6px 0 10px}
@@ -432,7 +435,8 @@ function modal({icon='',title='',text='',html='',ok='Гаразд',cancel=''}){
    ("зображений", "на малюнку", варіанти "Знак 1 / Знак 2", позначки "місце А / траєкторія Б",
    дублікати з різними ключами, що відрізняються лише малюнком). Тимчасово не потрапляють в іспит. */
 const IMAGE_REQUIRED_IDS=new Set('1-018 1-019 1-022 1-026 1-027 1-037 1-052 1-066 2-036 4-024 4-025 8.1-014 8.1-030 8.1-050 8.1-054 8.1-063 8.2-001 8.2-002 9-008 9-011 10-001 10-025 10-026 11-001 11-003 11-011 11-015 12-020 14-001 14-019 15-001 15-003 15-005 15-009 15-015 15-023 15-027 15-036 15-038 15-039 15-041 15-047 15-051 15-097 16.1-012 16.2-004 16.2-011 16.2-065 16.2-071 17-002 17-003 17-008 20-007 20-008 24-003 24-004 26-012 33-001 33-002 33-003 33-004 33-005 33-006 33-007 33-008 33-009 33-010 33-011 33-012 33-013 33-015 33-016 33-017 33-018 33-019 33-020 33-021 33-022 33-023 33-024 33-025 33-026 33-027 33-028 33-029 33-030 33-031 33-032 33-033 33-034 33-035 33-036 33-037 33-038 33-039 33-040 33-041 33-042 33-043 33-044 33-045 33-046 33-047 33-048 33-049 33-050 33-051 33-052 33-053 33-054 33-056 33-057 33-060 33-061 33-062 33-063 33-064 33-065 33-066 33-067 33-068 33-069 33-070 33-071 33-072 33-073 33-074 33-075 33-076 33-077 33-078 33-080 33-082 33-083 33-084 33-085 33-086 33-087 33-088 33-089 33-090 33-091 33-092 33-093 33-094 33-095 33-096 33-097 33-098 33-099 33-100 33-101 33-102 33-103 33-105 33-107 33-114 33-115 33-116 33-117 33-118 33-119 33-120 33-121 33-122 33-123 33-124 33-125 33-127 33-128 33-130 33-131 33-132 33-133 33-134 33-135 33-136 33-137 33-138 33-139 33-140 33-141 33-142 33-143 33-144 33-145 33-146 33-147 33-148 33-149 33-150 33-151 33-152 33-153 33-154 33-155 33-156 33-157 33-158 33-159 33-160 33-161 33-162 33-163 33-164 33-165 33-166 33-167 33-168 33-170 33-171 33-172 33-174 33-175 33-176 33-177 33-178 33-179 33-182 33-185 33-186 33-188 33-189 33-190 33-191 33-192 33-193 33-194 33-195 33-196 33-199 33-200 33-201 33-202 33-203 33-205 33-206 33-207 33-209 33-213 33-215 33-217 33-218 33-222 33-223 33-224 33-225 33-229 33-233 33-234 33-236 33-238 33-246 33-247 33-252 33-254 33-255 33-256 33-257 33-258 33-259 33-260 33-261 33-263 33-264 33-265 33-266 33-267 33-268 33-269 33-270 33-271 33-272 33-273 33-275 33-276 33-277 33-278 33-279 33-280 33-281 33-282 33-283 33-284 33-286 33-287 33-288 33-289 33-290 33-291 33-292 33-293 33-294 33-295 33-296 33-299 33-300 33-301 33-303 33-304 33-305 33-309 33-310 33-311 33-312 33-319 33-320 33-321 33-323 33-334 33-338 33-342 33-343 33-344 33-345 33-346 33-347 33-350 33-353 33-354 33-355 33-356 34-005 34-012 35-089 35-096 35-156 35-157 40-008 40-011 45-017 45-019 45-020 45-029 45-030 45-031 45-032 48-001 48-002 48-003 48-004 48-005 48-006 48-007 48-008 48-009 48-010 48-013 48-014 48-015 48-016 48-027 48-029 48-030 48-031 48-045 48-048 51-001 55-003 56-008 52-002 52-010 52-014 52-015 52-016 52-017 52-018'.split(' '));
-/* 4.3: текстові запитання, що мають дублікат з ІНШИМ ключем у базі (один із ключів хибний). Ключі не змінено — лише попередження. */
+/* 4.3: текстові запитання, що мають дублікат з ІНШИМ ключем у базі (один із ключів хибний).
+   Ключі не змінено. Тимчасово не потрапляють в іспит; у тренуванні позначені як неперевірені. */
 const KEY_CONFLICT_IDS=new Set('18-012 43-030 35-034 35-146 35-038 35-147 35-131 35-162 40-001 56-020 48-084 52-050 49-003 53-021 49-004 53-013 49-005 53-012 49-012 53-007 49-013 53-008 49-014 53-020 49-015 53-019 49-027 53-017 49-028 53-009 49-031 53-028 49-033 53-029 49-043 53-035 49-044 53-023 49-046 53-036 49-047 53-037 49-049 53-039 51-010 55-026'.split(' '));
 
 
@@ -462,7 +466,9 @@ const IMAGES=(function(){
 const imageFor=id=>IMAGES.get(id)||null;
 const needsImage=id=>IMAGE_REQUIRED_IDS.has(id);
 /* В іспит не потрапляє запитання, якому потрібна ілюстрація, але перевіреної ілюстрації немає */
-const examReady=q=>hasKey(q)&&(!needsImage(q.id)||!!(imageFor(q.id)&&imageFor(q.id).verified));
+/* ...і запитання з суперечливими ключами (KEY_CONFLICT_IDS) — до звірки ключів */
+const examReady=q=>hasKey(q)&&!KEY_CONFLICT_IDS.has(q.id)&&(!needsImage(q.id)||!!(imageFor(q.id)&&imageFor(q.id).verified));
+const UNVERIFIED_HTML='<div class="q-unverified">⚠️ Неперевірене запитання: у базі є таке саме запитання з іншим ключем, тож один із ключів хибний. Тимчасово не входить до іспиту.</div>';
 function examPool(cat=state.category){return qs.filter(q=>examReady(q)&&topicInCategory(q.topic,cat))}
 function figureHTML(q){
   const im=imageFor(q.id);
@@ -671,7 +677,8 @@ function home(){
   const passedN=exams.filter(passedRecord).length;
   const keyed=qs.filter(hasKey).length;
   const pool=examPool().length;
-  const imgOut=qs.filter(q=>hasKey(q)&&!examReady(q)).length;
+  const imgOut=qs.filter(q=>hasKey(q)&&needsImage(q.id)&&!(imageFor(q.id)&&imageFor(q.id).verified)).length;
+  const conflictOut=qs.filter(q=>hasKey(q)&&KEY_CONFLICT_IDS.has(q.id)).length;
   const remind=needsBackupReminder();
   app.innerHTML=`<div>
   ${remind?`<section class="card backup-card"><div class="row"><div><div class="eyebrow">Захист прогресу</div><h3>💾 Час зробити резервну копію</h3></div></div>
@@ -685,6 +692,7 @@ function home(){
     <div class="row" style="margin-top:12px"><b>Рівень ${level()}</b><span class="tiny muted">${levelPct()} / 100 ⭐</span></div>
     <div class="bar" style="margin-top:6px"><i style="width:${levelPct()}%"></i></div>
     <button class="cat-chip" id="catBtn">🪪 Категорія: <b>${esc(catLabel())}</b> <span>змінити</span></button>
+    ${state.category==='ALL'?'':'<p class="cat-warn">⚠️ Склад категорії визначено за назвами тем у базі й ще не звірено з офіційною програмою.</p>'}
     <div class="actions"><button class="btn" id="exam">🚗 Почати іспит</button><button class="btn soft" id="learn">📚 Вибрати тему</button></div>
   </section>
   <section class="card">
@@ -699,7 +707,7 @@ function home(){
   <section class="card wood">
     <h3>Як працює іспит</h3>
     <p>20 випадкових запитань · 20 хвилин · зупинка після третьої помилки. Складено — якщо не більше 2 помилок. Після іспиту — розбір помилок.</p>
-    <p class="tiny muted">Для категорії ${esc(catLabel())} в іспиті ${pool} запитань. Тимчасово не використовуються: ${imgOut} запитань, яким потрібна відсутня ілюстрація, і ${qs.length-keyed} запитань без ключа. Усі ${qs.length} запитань доступні в розділі «Теми».</p>
+    <p class="tiny muted">Для категорії ${esc(catLabel())} в іспиті ${pool} запитань. Тимчасово не використовуються: ${imgOut} запитань, яким потрібна відсутня ілюстрація, ${conflictOut} запитань із суперечливими ключами і ${qs.length-keyed} запитань без ключа. Усі ${qs.length} запитань доступні в розділі «Теми».</p>
     <p class="note">⚠️ Ключі відповідей перенесено зі сканованого PDF, але їх ще не перевірено незалежно. Це тестовий тренажер, не офіційний іспит.</p>
   </section></div>`;
   $('#exam').onclick=()=>start('exam');$('#learn').onclick=()=>navigate('topics');
@@ -715,26 +723,26 @@ let topicFilter='',showAllTopics=false;
 function topicView(){
   const hiddenN=topics.filter(t=>!topicInCategory(t.id)).length;
   app.innerHTML=`<section class="card"><div class="eyebrow">Тренування</div><h2>📚 Теми ПДР</h2>
-  <p class="tiny muted">Категорія ${esc(catLabel())}: загальні теми та теми категорії.${hiddenN?` ${showAllTopics?'Показано також':'Приховано'} ${hiddenN} ${plural(hiddenN,'тему','теми','тем')} інших категорій.`:''}</p>
+  <p class="tiny muted">Категорія ${esc(catLabel())}: загальні теми та теми категорії.${state.category==='ALL'?'':' <span class="cat-warn-inline">⚠️ Відповідність тем категоріям не звірено офіційно.</span>'}${hiddenN?` ${showAllTopics?'Показано також':'Приховано'} ${hiddenN} ${plural(hiddenN,'тему','теми','тем')} інших категорій.`:''}</p>
   ${hiddenN?`<button class="btn ghost small" id="allT" style="padding-left:0">${showAllTopics?'Сховати теми інших категорій':'Показати теми інших категорій'}</button>`:''}
   <input class="search" id="filter" type="search" placeholder="Пошук теми або номера" autocomplete="off" value="${esc(topicFilter)}"><div id="topiclist" class="tlist"></div></section>`;
   const filter=$('#filter');const wrongSet=new Set(validWrong());
   const at=$('#allT');if(at)at.onclick=()=>{showAllTopics=!showAllTopics;topicView()};
   const draw=()=>{const term=filter.value.toLowerCase().trim();topicFilter=filter.value;
     const list=topics.filter(t=>(showAllTopics||topicInCategory(t.id))&&(t.id+' '+tName(t)).toLowerCase().includes(term));
-    $('#topiclist').innerHTML=list.length?list.map(t=>{const arr=qs.filter(q=>q.topic===t.id);const k=arr.filter(hasKey).length;const w=arr.filter(q=>wrongSet.has(q.id)).length;const im=arr.filter(q=>needsImage(q.id)).length;
-      return `<button class="trow" data-topic="${esc(t.id)}"><span class="tnum">${esc(t.id)}</span><span class="tname">${esc(tName(t))}<small>${t.count} запитань · ${k} із ключем${im?` · 🖼️ ${im}`:''}${topicInCategory(t.id)?'':' · інша категорія'}</small></span>${w?`<span class="badge">${w} ✕</span>`:''}</button>`}).join(''):'<p class="muted">Нічого не знайдено.</p>';
+    $('#topiclist').innerHTML=list.length?list.map(t=>{const arr=qs.filter(q=>q.topic===t.id);const k=arr.filter(hasKey).length;const w=arr.filter(q=>wrongSet.has(q.id)).length;const im=arr.filter(q=>needsImage(q.id)).length;const cf=arr.filter(q=>KEY_CONFLICT_IDS.has(q.id)).length;
+      return `<button class="trow" data-topic="${esc(t.id)}"><span class="tnum">${esc(t.id)}</span><span class="tname">${esc(tName(t))}<small>${t.count} запитань · ${k} із ключем${im?` · 🖼️ ${im}`:''}${cf?` · ⚠️ ${cf}`:''}${topicInCategory(t.id)?'':' · інша категорія'}</small></span>${w?`<span class="badge">${w} ✕</span>`:''}</button>`}).join(''):'<p class="muted">Нічого не знайдено.</p>';
     app.querySelectorAll('[data-topic]').forEach(b=>b.onclick=()=>topicDetail(b.dataset.topic))};
   filter.oninput=draw;draw();
 }
 function topicDetail(id){
   const t=topicById.get(id);if(!t)return;page='topics';
-  const arr=qs.filter(q=>q.topic===id);const k=arr.filter(hasKey).length;const im=arr.filter(q=>needsImage(q.id)).length;
-  app.innerHTML=`<div class="fade"><section class="card lav"><button class="btn ghost small" id="back" style="padding-left:0">← Усі теми</button><div class="eyebrow">Тема ${esc(t.id)}${topicInCategory(id)?'':' · інша категорія'}</div><h2 style="text-transform:lowercase" class="tname">${esc(tName(t))}</h2><p class="muted">${arr.length} запитань у темі · ${k} із попереднім ключем</p>${im?`<p class="tiny muted">🖼️ ${im} ${plural(im,'запитанню','запитанням','запитанням')} потрібна ілюстрація, якої поки немає. У тренуванні вони позначені, в іспит не потрапляють.</p>`:''}<div class="actions"><button class="btn" id="train" ${k?'':'disabled'}>▶ Тренувати тему</button><button class="btn soft" id="browse">📖 Переглянути</button></div><p class="tiny muted" style="margin-top:10px">Тренування використовує лише запитання з попередніми ключами.</p></section><section class="card hidden" id="browser"></section></div>`;
+  const arr=qs.filter(q=>q.topic===id);const k=arr.filter(hasKey).length;const im=arr.filter(q=>needsImage(q.id)).length;const cf=arr.filter(q=>KEY_CONFLICT_IDS.has(q.id)).length;
+  app.innerHTML=`<div class="fade"><section class="card lav"><button class="btn ghost small" id="back" style="padding-left:0">← Усі теми</button><div class="eyebrow">Тема ${esc(t.id)}${topicInCategory(id)?'':' · інша категорія'}</div><h2 style="text-transform:lowercase" class="tname">${esc(tName(t))}</h2><p class="muted">${arr.length} запитань у темі · ${k} із попереднім ключем</p>${im?`<p class="tiny muted">🖼️ ${im} ${plural(im,'запитанню','запитанням','запитанням')} потрібна ілюстрація, якої поки немає. У тренуванні вони позначені, в іспит не потрапляють.</p>`:''}${cf?`<p class="tiny muted">⚠️ ${cf} ${plural(cf,'запитання має','запитання мають','запитань мають')} суперечливий ключ (дублікат з іншою відповіддю). Вони позначені як неперевірені й не входять до іспиту.</p>`:''}<div class="actions"><button class="btn" id="train" ${k?'':'disabled'}>▶ Тренувати тему</button><button class="btn soft" id="browse">📖 Переглянути</button></div><p class="tiny muted" style="margin-top:10px">Тренування використовує лише запитання з попередніми ключами.</p></section><section class="card hidden" id="browser"></section></div>`;
   $('#back').onclick=()=>{topicView();window.scrollTo(0,0)};
   $('#train').onclick=()=>start('topic',id);
   $('#browse').onclick=()=>{const target=$('#browser');target.classList.remove('hidden');let shownN=0;
-    const more=()=>{shownN+=20;target.innerHTML=arr.slice(0,shownN).map(q=>`<div class="qbrowse"><small class="muted">${esc(q.id)}${needsImage(q.id)?' · 🖼️ потрібна ілюстрація':''}${KEY_CONFLICT_IDS.has(q.id)?' · ⚠️ ключ суперечить дублікату':''}</small><p style="white-space:pre-wrap;font-weight:700">${esc(q.question)}</p>${imageFor(q.id)?figureHTML(q):''}<ol>${q.options.map(o=>`<li>${esc(o)}</li>`).join('')}</ol><small class="muted">Ключ: ${hasKey(q)?'попередній, не перевірено':'немає'}</small></div>`).join('')+(shownN<arr.length?'<button class="btn soft block" id="more">Ще 20</button>':'');const b=$('#more');if(b)b.onclick=more};
+    const more=()=>{shownN+=20;target.innerHTML=arr.slice(0,shownN).map(q=>`<div class="qbrowse"><small class="muted">${esc(q.id)}${needsImage(q.id)?' · 🖼️ потрібна ілюстрація':''}${KEY_CONFLICT_IDS.has(q.id)?' · ⚠️ неперевірене: ключ суперечить дублікату, не входить до іспиту':''}</small><p style="white-space:pre-wrap;font-weight:700">${esc(q.question)}</p>${imageFor(q.id)?figureHTML(q):''}<ol>${q.options.map(o=>`<li>${esc(o)}</li>`).join('')}</ol><small class="muted">Ключ: ${hasKey(q)?'попередній, не перевірено':'немає'}</small></div>`).join('')+(shownN<arr.length?'<button class="btn soft block" id="more">Ще 20</button>':'');const b=$('#more');if(b)b.onclick=more};
     more();target.scrollIntoView({behavior:'smooth',block:'start'})};
 }
 
@@ -804,6 +812,7 @@ function renderQuiz(){
    <p class="tiny muted" style="margin:0">Тема ${esc(q.topic)}${t?' · '+esc(tName(t).toLowerCase()):''} · ${esc(q.id)}</p>
    <p class="qtext">${esc(q.question)}</p>
    ${figureHTML(q)}
+   ${KEY_CONFLICT_IDS.has(q.id)?UNVERIFIED_HTML:''}
    <div id="answers">${q.options.map((o,i)=>`<button class="ans" data-answer="${i}"><span class="n">${i+1}</span><span>${esc(o)}</span></button>`).join('')}</div>
    <div id="feedback"></div>
    <div class="actions"><button id="next" class="btn block hidden">Наступне →</button></div>
@@ -835,7 +844,7 @@ function showFeedback(q,scroll){
   const i=session.selected,ci=q.provisional_correct_index,right=i===ci;
   app.querySelectorAll('[data-answer]').forEach(b=>{b.disabled=true;const n=Number(b.dataset.answer);b.classList.toggle('good',n===ci);b.classList.toggle('bad',n===i&&!right);if(n!==ci&&n!==i)b.classList.add('dim')});
   $('#feedback').innerHTML=(right?`<div class="fb good">✅ Правильно! +3 🪙 +5 ⭐</div>`:`<div class="fb bad">❌ За попереднім ключем правильний варіант: ${ci+1}<small>${esc(q.options[ci])}</small></div>`)+
-    (KEY_CONFLICT_IDS.has(q.id)?'<div class="fb warn">⚠️ У базі є таке саме запитання з іншим ключем — ця відповідь сумнівна.</div>':'');
+    (KEY_CONFLICT_IDS.has(q.id)?'<div class="fb warn">⚠️ Неперевірений ключ: у базі є таке саме запитання з іншим ключем — ця відповідь сумнівна.</div>':'');
   const b=$('#next');b.classList.remove('hidden');
   const stop=session.mode==='exam'&&session.errors>EXAM_MAX_ERRORS;
   const last=session.i+1>=session.ids.length;
@@ -925,7 +934,7 @@ function reviewHTML(list,total,skipped){
     return `<div class="rv"><div class="rv-meta">Запитання ${r.n} із ${total} · ID ${esc(q.id)} · тема ${esc(q.topic)}${t?' · '+esc(tName(t).toLowerCase()):''}</div>
       <p class="rv-q">${esc(q.question)}</p>${figureHTML(q)}
       <ol class="rv-opts">${q.options.map((o,i)=>{const mine=i===r.sel,key=i===keyNow;return `<li class="${key?'key':''} ${mine&&!key?'rv-mine':''}"><span>${esc(o)}</span>${mine&&!key?'<em>❌ Твоя відповідь</em>':''}${key?'<em>✅ Відповідь за ключем</em>':''}</li>`}).join('')}</ol>
-      ${KEY_CONFLICT_IDS.has(q.id)?'<p class="tiny rv-warn">⚠️ У базі є таке саме запитання з іншим ключем — відповідь сумнівна.</p>':''}
+      ${KEY_CONFLICT_IDS.has(q.id)?'<p class="tiny rv-warn">⚠️ Неперевірений ключ: у базі є таке саме запитання з іншим ключем — відповідь сумнівна.</p>':''}
       ${changed?'<p class="tiny rv-warn">ℹ️ Ключ цього запитання змінився після проходження тесту.</p>':''}</div>`}).join('')
     :'<p class="muted">Неправильних відповідей немає 🎉</p>';
   return `<section class="card fade" id="review">${head}${body}${skipped>0?`<p class="tiny muted" style="margin-top:10px">Без відповіді залишилось: ${skipped} ${plural(skipped,'запитання','запитання','запитань')}.</p>`:''}</section>`;
